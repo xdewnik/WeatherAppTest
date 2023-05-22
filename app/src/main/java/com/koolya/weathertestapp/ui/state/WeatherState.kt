@@ -12,6 +12,6 @@ sealed class WeatherState {
 
     data class Info(val temp: String, val icon: String, val description: String) : WeatherState()
 
-    data class Error(private val message: String) : WeatherState()
+    data class Error(val message: String) : WeatherState()
 
 }
