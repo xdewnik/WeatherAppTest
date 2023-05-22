@@ -1,6 +1,7 @@
 package com.koolya.weathertestapp.ui.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -10,9 +11,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
-import com.google.android.gms.location.LocationServices
 import com.koolya.weathertestapp.R
 import com.koolya.weathertestapp.ui.event.WeatherEvent
 import com.koolya.weathertestapp.ui.state.WeatherState
@@ -37,7 +38,7 @@ fun WeatherScreen(viewModel: WeatherViewModel = koinViewModel()) {
         viewModel.sendEvent(WeatherEvent.PermissionResult(locationPermissionsState.allPermissionsGranted))
     }
 
-    Box {
+    Box(modifier = Modifier.padding(24.dp)) {
         when (val state = uiState.value) {
             is WeatherState.Error -> WeatherError(
                 message = state.message,
