@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.location.LocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
@@ -18,7 +19,7 @@ class LocationServiceImpl(private val locationService: FusedLocationProviderClie
     @SuppressLint("MissingPermission")
     override suspend fun getCurrentLocation(): Location =
         suspendCancellableCoroutine { continuation ->
-            locationService.getCurrentLocation(LocationRequest.QUALITY_HIGH_ACCURACY,
+            locationService.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY,
                 object : CancellationToken() {
                     override fun onCanceledRequested(p0: OnTokenCanceledListener): CancellationToken {
                         return CancellationTokenSource().token
