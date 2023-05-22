@@ -2,6 +2,7 @@ package com.koolya.weathertestapp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.koolya.weathertestapp.domain.interactor.WeatherInteractor
 import com.koolya.weathertestapp.ui.event.WeatherEvent
 import com.koolya.weathertestapp.ui.state.WeatherState
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class WeatherViewModel : ViewModel() {
+class WeatherViewModel(private val interactor: WeatherInteractor) : ViewModel() {
 
     private val _uiState = MutableStateFlow<WeatherState>(WeatherState.Initial)
     val uiState = _uiState.asStateFlow()
@@ -46,7 +47,15 @@ class WeatherViewModel : ViewModel() {
     private fun getWeatherData() {
         _uiState.value = WeatherState.Loading
         viewModelScope.launch {
-            //todo add get data
+            interactor.getWeatherData()
+                .onSuccess {
+                    _uiState.value = WeatherState.Info(
+                        temp = it.temp,
+                        icon = it.weatherImage,
+                        description = it.weatherStatus,
+                    )
+                }
+                .onFailure { _uiState.value = WeatherState.Error(it.message.orEmpty()) }
         }
     }
 }

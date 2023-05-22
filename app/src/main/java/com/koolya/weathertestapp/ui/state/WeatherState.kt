@@ -2,7 +2,7 @@ package com.koolya.weathertestapp.ui.state
 
 sealed class WeatherState {
 
-    object Initial: WeatherState()
+    object Initial : WeatherState()
 
     object Loading : WeatherState()
 
@@ -10,7 +10,7 @@ sealed class WeatherState {
 
     object PermissionNotGranted : WeatherState()
 
-    object Info : WeatherState()
+    data class Info(val temp: String, val icon: String, val description: String) : WeatherState()
 
     data class Error(private val message: String) : WeatherState()
 
