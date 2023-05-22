@@ -19,7 +19,7 @@ android {
             useSupportLibrary true
         }
 
-        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/data/3.0/\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/\"")
 
         //todo add some checks for existing
         def weatherApiKeyPropertiesFile = rootProject.file("weather.properties")
