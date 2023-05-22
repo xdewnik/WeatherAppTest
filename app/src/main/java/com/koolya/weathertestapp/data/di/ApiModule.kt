@@ -1,8 +1,10 @@
 package com.koolya.weathertestapp.data.di
 
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.koolya.weathertestapp.BuildConfig
 import com.koolya.weathertestapp.data.api.WeatherApi
+import com.koolya.weathertestapp.data.api.adapter.ErrorCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -43,6 +45,7 @@ val ApiModule = module {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(get<GsonConverterFactory>())
+            .addCallAdapterFactory(ErrorCallAdapterFactory(Gson()))
             .client(get())
             .build()
     }

@@ -2,7 +2,6 @@ package com.koolya.weathertestapp.data.datasource
 
 import android.annotation.SuppressLint
 import android.location.Location
-import android.location.LocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
@@ -33,7 +32,8 @@ class LocationServiceImpl(private val locationService: FusedLocationProviderClie
                 } else {
                     continuation.resume(it)
                 }
-            }.addOnFailureListener { continuation.resumeWithException(it) }
+            }
+                .addOnFailureListener { continuation.resumeWithException(it) }
                 .addOnCanceledListener { continuation.cancel(null) }
         }
 
